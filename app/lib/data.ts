@@ -1,33 +1,47 @@
+import { Pokemon } from "./definition";
+import { toThreeDigit } from "./utils";
+
 export async function fetchPokemons() {
   try {
     const data = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=10");
     const response = await data.json();
     const results = response.results;
-    let pokemons: any[] = [];
+    let pokemons: Pokemon[] = [];
 
     for (const result of results) {
       const pokemon = await fetchPokemon(result.url);
-      pokemons.push(pokemon);
+      if (!pokemon) {
+        return null;
+      }
+      pokemons.push({ ...pokemon });
     }
 
     return pokemons;
   } catch (error) {
     console.error("Fetching all pokemons error:", error);
-    throw new Error("Failed to fetch all pokemons data.");
+    return null;
   }
 }
 
 export async function fetchPokemon(url: string) {
   try {
+    if (!url) {
+      return null;
+    }
+
     const data = await fetch(url);
     const response = await data.json();
 
-    const pokemon = {
-      id: response.id,
+    if (!response) {
+      return null;
+    }
+
+    const pokemon: Pokemon = {
+      id: response.id.toString(),
       name: response.name,
-      imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${response.id
-        .toString()
-        .padStart(3, "0")}.png`,
+      imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${toThreeDigit(
+        response.id
+      )}.png`,
       types: response.types.map((element: any) => {
         return element.type.name;
       }),
@@ -35,7 +49,7 @@ export async function fetchPokemon(url: string) {
 
     return pokemon;
   } catch (error) {
-    console.error("Fetching Pokemon Data Error:", error);
-    throw new Error("Failed to fetch pokemon data.");
+    console.log("Pokemon Error:", error);
+    return null;
   }
 }
