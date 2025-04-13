@@ -1,20 +1,29 @@
-import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandEmpty,
+} from "@/components/ui/command";
 import { Pokemon } from "../lib/definition";
 import PokemonCard from "./pokemon_card";
 
 interface PropsInterface {
-  readonly pokemon: Pokemon;
+  readonly pokemon?: Pokemon;
+  readonly hasNoResult?: boolean;
 }
 
 export default async function SearchResult(props: PropsInterface) {
-  const { pokemon } = props;
+  const { pokemon, hasNoResult } = props;
 
   return (
     <Command>
       <CommandGroup heading="Result">
-        <CommandItem>
-          <PokemonCard pokemon={pokemon} />
-        </CommandItem>
+        {hasNoResult && <CommandEmpty>No results found.</CommandEmpty>}
+        {pokemon && (
+          <CommandItem>
+            <PokemonCard pokemon={pokemon} />
+          </CommandItem>
+        )}
       </CommandGroup>
     </Command>
   );

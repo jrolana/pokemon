@@ -3,18 +3,23 @@ import { toThreeDigit } from "./utils";
 
 export async function fetchPokemons(offset: number, limit: number) {
   try {
-    const data = await fetch(
+    const response = await fetch(
       `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`
     );
-    const response = await data.json();
-    const results = response.results;
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch all pokemons.");
+    }
+
+    const data = await response.json();
+    const results = data.results;
     let pokemons: Pokemon[] = [];
 
     for (const result of results) {
       const pokemon = await fetchPokemon(result.url);
 
       if (!pokemon) {
-        return null;
+        throw new Error("Failed to fetch all pokemons.");
       }
       pokemons.push({ ...pokemon });
     }
@@ -22,21 +27,21 @@ export async function fetchPokemons(offset: number, limit: number) {
     return pokemons;
   } catch (error) {
     console.error("Fetching all pokemons error:", error);
-    return null;
+    throw new Error("Failed to fetch all pokemons.");
   }
 }
 
 export async function fetchPokemon(url: string) {
   try {
     if (!url) {
-      return null;
+      throw new Error("Failed to fetch pokemon.");
     }
 
     const response = await fetch(url);
     const data = await response.json();
 
     if (!response.ok) {
-      return null;
+      throw new Error("Failed to fetch pokemon.");
     }
 
     const pokemon: Pokemon = {
@@ -53,6 +58,6 @@ export async function fetchPokemon(url: string) {
     return pokemon;
   } catch (error) {
     console.log("Pokemon Error:", error);
-    return null;
+    throw new Error("Failed to fetch pokemon.");
   }
 }

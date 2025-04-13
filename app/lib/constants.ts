@@ -19,4 +19,4 @@ export const bgColor: { [key: string]: string } = {
   fairy: "bg-pink-300",
 };
 
-export const POSTS_PER_PAGE = 10;
+export const POKEMONS_PER_PAGE = 15;
