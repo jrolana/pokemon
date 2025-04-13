@@ -1,15 +1,18 @@
 import { Pokemon } from "./definition";
 import { toThreeDigit } from "./utils";
 
-export async function fetchPokemons() {
+export async function fetchPokemons(offset: number, limit: number) {
   try {
-    const data = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=10");
+    const data = await fetch(
+      `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`
+    );
     const response = await data.json();
     const results = response.results;
     let pokemons: Pokemon[] = [];
 
     for (const result of results) {
       const pokemon = await fetchPokemon(result.url);
+
       if (!pokemon) {
         return null;
       }
@@ -29,20 +32,20 @@ export async function fetchPokemon(url: string) {
       return null;
     }
 
-    const data = await fetch(url);
-    const response = await data.json();
+    const response = await fetch(url);
+    const data = await response.json();
 
-    if (!response) {
+    if (!response.ok) {
       return null;
     }
 
     const pokemon: Pokemon = {
-      id: response.id.toString(),
-      name: response.name,
+      id: data.id.toString(),
+      name: data.name,
       imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${toThreeDigit(
-        response.id
+        data.id
       )}.png`,
-      types: response.types.map((element: any) => {
+      types: data.types.map((element: any) => {
         return element.type.name;
       }),
     };

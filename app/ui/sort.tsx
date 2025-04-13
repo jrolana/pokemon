@@ -4,13 +4,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { Search } from "lucide-react";
 
-interface PropsInterface {
-  readonly placeholder: string;
-}
-
-export default function SearchCommand(props: PropsInterface) {
-  const { placeholder } = props;
-
+export function SearchCommand() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -26,13 +20,12 @@ export default function SearchCommand(props: PropsInterface) {
   }, 150);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0 rounded-xl  md:min-w-[450px]">
+    <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm placeholder:text-gray-500"
-        placeholder={placeholder}
+        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
