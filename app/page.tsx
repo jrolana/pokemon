@@ -4,6 +4,7 @@ import { POKEMONS_PER_PAGE } from "./lib/constants";
 import PokemonList from "./ui/pokemon_list";
 import SearchCommand from "./ui/search";
 import SearchResult from "./ui/search_result";
+import { toThreeDigit } from "./lib/utils";
 
 interface PropsInterface {
   readonly searchParams?: Promise<{
@@ -18,7 +19,7 @@ export default async function Page(props: PropsInterface) {
   let pokemon;
   try {
     pokemon = await fetchPokemon(
-      `https://pokeapi.co/api/v2/pokemon/${query.replace(/^0+/, "")}/`
+      `https://pokeapi.co/api/v2/pokemon/${toThreeDigit(query)}/`
     );
   } catch (error) {
     pokemon = null;

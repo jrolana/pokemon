@@ -1,10 +1,10 @@
-export const bgColor: { [key: string]: string } = {
+export const POKEMON_TYPE_COLOR: { [key: string]: string } = {
   normal: "bg-gray-400",
   fire: "bg-red-500",
   water: "bg-blue-500",
   grass: "bg-green-500",
   electric: "bg-yellow-400",
-  ice: "bg-blue-200",
+  ice: "bg-blue-300",
   fighting: "bg-red-700",
   poison: "bg-purple-600",
   ground: "bg-yellow-700",
@@ -17,6 +17,27 @@ export const bgColor: { [key: string]: string } = {
   dark: "bg-gray-800",
   steel: "bg-gray-400",
   fairy: "bg-pink-300",
+};
+
+export const POKEMON_TYPE_WEAKNESSES: { [key: string]: string[] } = {
+  normal: ["fighting"],
+  fire: ["water", "ground", "rock"],
+  water: ["electric", "grass"],
+  electric: ["ground"],
+  grass: ["fire", "ice", "poison", "flying", "bug"],
+  ice: ["fire", "fighting", "rock", "steel"],
+  fighting: ["flying", "psychic", "fairy"],
+  poison: ["ground", "psychic"],
+  ground: ["water", "ice", "grass"],
+  flying: ["electric", "ice", "rock"],
+  psychic: ["bug", "ghost", "dark"],
+  bug: ["fire", "flying", "rock"],
+  rock: ["water", "grass", "fighting", "ground", "steel"],
+  ghost: ["ghost", "dark"],
+  dragon: ["ice", "dragon", "fairy"],
+  dark: ["fighting", "bug", "fairy"],
+  steel: ["fire", "fighting", "ground"],
+  fairy: ["poison", "steel"],
 };
 
 export const POKEMONS_PER_PAGE = 15;

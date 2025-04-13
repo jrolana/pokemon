@@ -8,7 +8,7 @@ import {
 import Image from "next/image";
 import { capitalize, toThreeDigit } from "../lib/utils";
 import { Pokemon } from "../lib/definition";
-import { bgColor } from "../lib/constants";
+import { POKEMON_TYPE_COLOR } from "../lib/constants";
 
 interface PropsInterface {
   readonly pokemon: Pokemon;
@@ -40,7 +40,7 @@ export default function PokemonCard(props: PropsInterface) {
             <Badge
               key={pokemon.id + type}
               variant="default"
-              className={`flex gap-1 rounded-lg text-xs ${bgColor[type]}`}
+              className={`flex gap-1 rounded-lg text-xs ${POKEMON_TYPE_COLOR[type]}`}
             >
               {capitalize(type)}
             </Badge>
