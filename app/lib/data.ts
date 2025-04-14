@@ -48,9 +48,12 @@ export async function fetchPokemon(url: string) {
     const pokemon: Pokemon = {
       id: data.id,
       name: data.name,
-      imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${toThreeDigit(
-        data.id.toString()
-      )}.png`,
+      imageUrl:
+        data.id < 1011
+          ? `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${toThreeDigit(
+              data.id.toString()
+            )}.png`
+          : "https://api.nuget.org/v3-flatcontainer/pokeapi-nj.net/1.2.0/icon",
       types: data.types.map((element: any) => {
         return element.type.name;
       }),

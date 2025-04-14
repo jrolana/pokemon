@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTrigger,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 
 import { Pokemon } from "../lib/definition";
@@ -14,19 +15,53 @@ import { Badge } from "@/components/ui/badge";
 import { capitalize, toThreeDigit } from "../lib/utils";
 import { POKEMON_TYPE_COLOR } from "../lib/constants";
 import Chart from "./charts";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getPokemon } from "../actions/getPokemon";
 
 interface PropsInterface {
-  readonly pokemon: Pokemon;
+  readonly propPokemon: Pokemon;
 }
 
 export default function PokemonDetail(props: PropsInterface) {
-  const { pokemon } = props;
+  const maxPokemonId = 10277;
+  const { propPokemon } = props;
+
+  const [pokemon, setPokemon] = useState({
+    ...propPokemon,
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handlePrevious = () => {
+    const prevId = pokemon.id > 1 ? pokemon.id - 1 : maxPokemonId;
+    onNavigate(prevId);
+  };
+
+  const handleNext = () => {
+    const nextId = pokemon.id < maxPokemonId ? pokemon.id + 1 : 1;
+    onNavigate(nextId);
+  };
+
+  const onNavigate = (pokemonId: number) => {
+    getPokemon(pokemonId).then((newPokemon: Pokemon) => {
+      setPokemon(() => newPokemon);
+    });
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+
+    if (!open) {
+      setPokemon(() => propPokemon);
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <div>
-          <PokemonCard pokemon={pokemon} />
+          <PokemonCard pokemon={propPokemon} />
         </div>
       </DialogTrigger>
 
@@ -41,6 +76,22 @@ export default function PokemonDetail(props: PropsInterface) {
             alt={`${pokemon.name} image`}
           />
         </div>
+
+        <button
+          onClick={handlePrevious}
+          className="absolute left-2 top-1/4 sm:top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full p-2 shadow-md z-10"
+          aria-label="Previous Pokemon"
+        >
+          <ChevronLeft className="h-6 w-6" />
+        </button>
+
+        <button
+          onClick={handleNext}
+          className="absolute right-2 top-1/4 sm:top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black rounded-full p-2 shadow-md z-10"
+          aria-label="Next Pokemon"
+        >
+          <ChevronRight className="h-6 w-6" />
+        </button>
 
         <div className="flex flex-col gap-6 pt-10 px-4">
           <div className="flex justify-between  items-center">
@@ -71,7 +122,7 @@ export default function PokemonDetail(props: PropsInterface) {
             <div className="flex flex-wrap gap-2">
               {pokemon.types.map((type: string) => (
                 <Badge
-                  key={pokemon.id + type}
+                  key={propPokemon.id + "type" + pokemon.id + type}
                   variant="default"
                   className={`flex gap-1 rounded-lg text-xs ${POKEMON_TYPE_COLOR[type]}`}
                 >
@@ -86,7 +137,7 @@ export default function PokemonDetail(props: PropsInterface) {
             <div className="flex flex-wrap gap-2">
               {pokemon.weaknesses.map((weakness: string) => (
                 <Badge
-                  key={pokemon.id + weakness}
+                  key={propPokemon.id + "weakness" + pokemon.id + weakness}
                   variant="default"
                   className={`flex gap-1 rounded-lg text-xs ${POKEMON_TYPE_COLOR[weakness]}`}
                 >

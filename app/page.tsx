@@ -1,10 +1,9 @@
-import { getPokemons } from "./actions/getPokemons";
-import { fetchPokemon } from "./lib/data";
+import { getAllPokemons } from "./actions/getAllPokemons";
 import { POKEMONS_PER_PAGE } from "./lib/constants";
 import PokemonList from "./ui/pokemon_list";
 import SearchCommand from "./ui/search";
 import SearchResult from "./ui/search_result";
-import { toThreeDigit } from "./lib/utils";
+import { getPokemon } from "./actions/getPokemon";
 
 interface PropsInterface {
   readonly searchParams?: Promise<{
@@ -15,16 +14,10 @@ interface PropsInterface {
 export default async function Page(props: PropsInterface) {
   const searchParams = await props.searchParams;
   const query = searchParams?.query;
-  const initialPokemons = await getPokemons(0, POKEMONS_PER_PAGE);
+  const initialPokemons = await getAllPokemons(0, POKEMONS_PER_PAGE);
   let pokemon;
   try {
-    pokemon = query
-      ? await fetchPokemon(
-          `https://pokeapi.co/api/v2/pokemon/${query
-            ?.toString()
-            .replace(/^0+/, "")}/`
-        )
-      : null;
+    pokemon = query ? await getPokemon(query) : null;
   } catch (error) {
     pokemon = null;
   }

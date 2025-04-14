@@ -2,7 +2,7 @@
 
 import { Pokemon } from "../lib/definition";
 import { useState } from "react";
-import { getPokemons } from "../actions/getPokemons";
+import { getAllPokemons } from "../actions/getAllPokemons";
 import { POKEMONS_PER_PAGE } from "../lib/constants";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SkeletonCardList from "./skeleton_cards";
@@ -30,7 +30,7 @@ export default function PokemonList(props: PropsInterface) {
 
   const loadMorePokemons = async () => {
     if (hasMoreData) {
-      const apiPokemons = await getPokemons(offset, POKEMONS_PER_PAGE);
+      const apiPokemons = await getAllPokemons(offset, POKEMONS_PER_PAGE);
 
       if (apiPokemons.length == 0) {
         setHasMoreData(false);
@@ -61,10 +61,10 @@ export default function PokemonList(props: PropsInterface) {
           <SelectValue placeholder="Sort Pokemons" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="+id">Highest ID (First)</SelectItem>
-          <SelectItem value="-id">Lowest ID (First)</SelectItem>
-          <SelectItem value="+name">Z-A</SelectItem>
-          <SelectItem value="-name">A-Z</SelectItem>
+          <SelectItem value="-id">Highest ID (First)</SelectItem>
+          <SelectItem value="+id">Lowest ID (First)</SelectItem>
+          <SelectItem value="-name">Z-A</SelectItem>
+          <SelectItem value="+name">A-Z</SelectItem>
         </SelectContent>
       </Select>
 
@@ -77,7 +77,7 @@ export default function PokemonList(props: PropsInterface) {
       >
         <div className="*:data-[slot=card]:shadow-xs @xl/main:grid-cols-3 @5xl/main:grid-cols-5 grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card">
           {pokemons.map((pokemon: Pokemon) => (
-            <PokemonDetail key={pokemon.id} pokemon={pokemon} />
+            <PokemonDetail key={pokemon.id} propPokemon={pokemon} />
           ))}
         </div>
       </InfiniteScroll>
