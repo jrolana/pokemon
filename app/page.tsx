@@ -20,6 +20,7 @@ export default async function Page(props: PropsInterface) {
   try {
     pokemon = query ? await getPokemon(query) : null;
   } catch (error) {
+    console.error(error);
     pokemon = null;
   }
 

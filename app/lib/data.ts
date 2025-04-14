@@ -14,7 +14,7 @@ export async function fetchPokemons(offset: number, limit: number) {
 
     const data = await response.json();
     const results = data.results;
-    let pokemons: Pokemon[] = [];
+    const pokemons: Pokemon[] = [];
 
     for (const result of results) {
       const pokemon = await fetchPokemon(result.url);

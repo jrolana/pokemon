@@ -16,7 +16,7 @@ export function toThreeDigit(str: string) {
 
 export function sortFunc(pokemons: Pokemon[], criteria: string) {
   let order: any = criteria[0];
-  let field = criteria.slice(1) as keyof Pokemon;
+  const field = criteria.slice(1) as keyof Pokemon;
 
   if (order == "-") {
     order = -1;

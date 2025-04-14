@@ -43,7 +43,7 @@ export default function PokemonList(props: PropsInterface) {
 
   const handleSort = (sortKey: string) => {
     if (sortKey) {
-      let sortedData = sortFunc(pokemons, sortKey);
+      const sortedData = sortFunc(pokemons, sortKey);
       setSortField(() => sortKey);
       setPokemons(() => sortedData);
     }
