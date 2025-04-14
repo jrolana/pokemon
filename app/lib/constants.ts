@@ -40,4 +40,5 @@ export const POKEMON_TYPE_WEAKNESSES: { [key: string]: string[] } = {
   fairy: ["poison", "steel"],
 };
 
-export const POKEMONS_PER_PAGE = 15;
+export const POKEMONS_PER_PAGE = 10;
+export const MAX_POKEMON_ID = 10277;

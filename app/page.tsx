@@ -4,6 +4,7 @@ import PokemonList from "./ui/pokemon_list";
 import SearchCommand from "./ui/search";
 import SearchResult from "./ui/search_result";
 import { getPokemon } from "./actions/getPokemon";
+import Banner from "./ui/banner";
 
 interface PropsInterface {
   readonly searchParams?: Promise<{
@@ -26,8 +27,9 @@ export default async function Page(props: PropsInterface) {
 
   return (
     <main className="@container/main flex flex-1 flex-col gap-2">
-      <div className="flex flex-col gap-4 p-4 m-4 md:gap-6 md:py-6">
-        <SearchCommand placeholder="Search for pokemon..." />
+      <Banner />
+      <div className="flex flex-col gap-4 pt-0 p-4 m-4 md:gap-6 md:py-6">
+        <SearchCommand placeholder="Search for a pokemon..." />
         {hasNoResult && <SearchResult hasNoResult={true} />}
         {pokemon && <SearchResult pokemon={pokemon} />}
         <PokemonList initialPokemons={initialPokemons} />

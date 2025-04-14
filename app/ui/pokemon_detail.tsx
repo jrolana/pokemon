@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogTrigger,
   DialogTitle,
-  DialogClose,
 } from "@/components/ui/dialog";
 
 import { Pokemon } from "../lib/definition";
@@ -13,7 +12,7 @@ import PokemonCard from "./pokemon_card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { capitalize, toThreeDigit } from "../lib/utils";
-import { POKEMON_TYPE_COLOR } from "../lib/constants";
+import { MAX_POKEMON_ID, POKEMON_TYPE_COLOR } from "../lib/constants";
 import Chart from "./charts";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -24,7 +23,6 @@ interface PropsInterface {
 }
 
 export default function PokemonDetail(props: PropsInterface) {
-  const maxPokemonId = 10277;
   const { propPokemon } = props;
 
   const [pokemon, setPokemon] = useState({
@@ -34,12 +32,12 @@ export default function PokemonDetail(props: PropsInterface) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handlePrevious = () => {
-    const prevId = pokemon.id > 1 ? pokemon.id - 1 : maxPokemonId;
+    const prevId = pokemon.id > 1 ? pokemon.id - 1 : MAX_POKEMON_ID;
     onNavigate(prevId);
   };
 
   const handleNext = () => {
-    const nextId = pokemon.id < maxPokemonId ? pokemon.id + 1 : 1;
+    const nextId = pokemon.id < MAX_POKEMON_ID ? pokemon.id + 1 : 1;
     onNavigate(nextId);
   };
 
