@@ -46,10 +46,10 @@ export async function fetchPokemon(url: string) {
     }
 
     const pokemon: Pokemon = {
-      id: data.id.toString(),
+      id: data.id,
       name: data.name,
       imageUrl: `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${toThreeDigit(
-        data.id
+        data.id.toString()
       )}.png`,
       types: data.types.map((element: any) => {
         return element.type.name;

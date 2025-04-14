@@ -5,7 +5,7 @@ import {
   CommandEmpty,
 } from "@/components/ui/command";
 import { Pokemon } from "../lib/definition";
-import PokemonCard from "./pokemon_card";
+import PokemonDetail from "./pokemon_detail";
 
 interface PropsInterface {
   readonly pokemon?: Pokemon;
@@ -21,7 +21,7 @@ export default async function SearchResult(props: PropsInterface) {
         {hasNoResult && <CommandEmpty>No results found.</CommandEmpty>}
         {pokemon && (
           <CommandItem>
-            <PokemonCard pokemon={pokemon} />
+            <PokemonDetail pokemon={pokemon} />
           </CommandItem>
         )}
       </CommandGroup>

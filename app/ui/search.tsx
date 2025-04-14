@@ -22,8 +22,9 @@ export default function SearchCommand(props: PropsInterface) {
     } else {
       params.delete("query");
     }
+
     replace(`${pathname}?${params.toString()}`);
-  }, 250);
+  }, 300);
 
   return (
     <div className="relative flex flex-1 flex-shrink-0 rounded-xl  md:min-w-[450px]">

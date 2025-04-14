@@ -13,10 +13,10 @@ export default function SkeletonCardList() {
 export function SkeletonCard() {
   return (
     <div className="flex flex-col space-y-3">
-      <Skeleton className="@container/card h-[14rem] w-[14rem] rounded-xl " />
+      <Skeleton className="@container/card h-54 rounded-xl " />
       <div className="space-y-2">
-        <Skeleton className="h-4 w-[12rem]" />
-        <Skeleton className="h-4 w-[8rem]" />
+        <Skeleton className="h-4 w-40" />
+        <Skeleton className="h-4 w-20" />
       </div>
     </div>
   );

@@ -18,9 +18,13 @@ export default async function Page(props: PropsInterface) {
   const initialPokemons = await getPokemons(0, POKEMONS_PER_PAGE);
   let pokemon;
   try {
-    pokemon = await fetchPokemon(
-      `https://pokeapi.co/api/v2/pokemon/${toThreeDigit(query)}/`
-    );
+    pokemon = query
+      ? await fetchPokemon(
+          `https://pokeapi.co/api/v2/pokemon/${query
+            ?.toString()
+            .replace(/^0+/, "")}/`
+        )
+      : null;
   } catch (error) {
     pokemon = null;
   }
@@ -30,9 +34,7 @@ export default async function Page(props: PropsInterface) {
   return (
     <main className="@container/main flex flex-1 flex-col gap-2">
       <div className="flex flex-col gap-4 p-4 m-4 md:gap-6 md:py-6">
-        <div className="flex gap-2">
-          <SearchCommand placeholder="Search for pokemon..." />
-        </div>
+        <SearchCommand placeholder="Search for pokemon..." />
         {hasNoResult && <SearchResult hasNoResult={true} />}
         {pokemon && <SearchResult pokemon={pokemon} />}
         <PokemonList initialPokemons={initialPokemons} />

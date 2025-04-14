@@ -29,7 +29,7 @@ export default function PokemonCard(props: PropsInterface) {
         />
         <div className="absolute right-4 -top-2">
           <Badge variant="secondary" className="flex gap-1 rounded-lg text-xs">
-            #{toThreeDigit(pokemon.id)}
+            #{toThreeDigit(pokemon.id.toString())}
           </Badge>
         </div>
         <CardTitle className="@[250px]/card:text-2xl text-xl font-semibold">

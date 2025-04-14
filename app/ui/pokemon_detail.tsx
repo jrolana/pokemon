@@ -3,11 +3,8 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
+  DialogTitle,
 } from "@/components/ui/dialog";
 
 import { Pokemon } from "../lib/definition";
@@ -16,11 +13,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { capitalize, toThreeDigit } from "../lib/utils";
 import { POKEMON_TYPE_COLOR } from "../lib/constants";
-import { Ruler, Weight } from "lucide-react";
 import Chart from "./charts";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "recharts";
 
 interface PropsInterface {
   readonly pokemon: Pokemon;
@@ -37,19 +30,20 @@ export default function PokemonDetail(props: PropsInterface) {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[600px] grid gap-0 p-0 md:grid-cols-2 overflow-hidden rounded-xl">
-        <div className="relative hidden bg-muted md:flex items-center justify-center">
+      <DialogContent className="sm:max-w-[600px] max-h-[90%] sm:max-h-full grid gap-0 p-0 md:grid-cols-2 overflow-auto rounded-xl">
+        <DialogTitle className="sr-only"></DialogTitle>
+        <div className="relative bg-muted md:flex items-center justify-center">
           <Image
-            className="w-full max-w-[200px] object-contain"
-            width={200}
-            height={200}
+            className="w-full object-contain"
+            width={500}
+            height={500}
             src={pokemon.imageUrl}
             alt={`${pokemon.name} image`}
           />
         </div>
 
-        <div className="flex flex-col gap-6 py-10 px-4">
-          <div className="flex justify-between items-center">
+        <div className="flex flex-col gap-6 pt-10 px-4">
+          <div className="flex justify-between  items-center">
             <h2 className="text-xl md:text-2xl font-semibold">
               {capitalize(pokemon.name)}
             </h2>
@@ -57,7 +51,7 @@ export default function PokemonDetail(props: PropsInterface) {
               variant="secondary"
               className="flex gap-1 rounded-lg text-xs"
             >
-              #{toThreeDigit(pokemon.id)}
+              #{toThreeDigit(pokemon.id.toString())}
             </Badge>
           </div>
 
@@ -102,7 +96,7 @@ export default function PokemonDetail(props: PropsInterface) {
             </div>
           </div>
 
-          <div className="text-sm">
+          <div className="text-sm mb-10">
             <h4 className="font-medium mb-1">Stats</h4>
             <div className="h-40 w-full">
               <Chart chartData={pokemon.stats} />

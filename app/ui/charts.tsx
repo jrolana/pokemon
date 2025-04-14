@@ -23,11 +23,7 @@ interface PropsInterface {
 const chartConfig = {
   base_stat: {
     label: "Base Stat",
-    color: "hsl(var(--chart-1))",
-  },
-
-  label: {
-    color: "hsl(var(--background))",
+    color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
 
